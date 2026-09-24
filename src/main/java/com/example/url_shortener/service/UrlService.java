@@ -3,6 +3,7 @@ package com.example.url_shortener.service;
 import com.example.url_shortener.dto.CreateUrlRequest;
 import com.example.url_shortener.dto.CreateUrlResponse;
 import com.example.url_shortener.entity.Url;
+import com.example.url_shortener.exception.ShortUrlNotFoundException;
 import com.example.url_shortener.repository.UrlRepository;
 import com.example.url_shortener.util.Base62Encoder;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -55,7 +56,7 @@ public class UrlService {
         // Get URL from MySQL
         Url url = urlRepository.findById(id)
                 .orElseThrow(() ->
-                new RuntimeException("Short URL not found"));
+                new ShortUrlNotFoundException("Short URL not found"));
 
         String originalUrl = url.getOriginalUrl();
 
